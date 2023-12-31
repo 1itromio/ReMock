@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class RequestDetailsViewModel(
     private val reMockStore: ReMockStore,
     private val routeNavigator: RouteNavigator,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ): ViewModel(), RouteNavigator by routeNavigator {
 
     private val requestId = checkNotNull(savedStateHandle.get<String>("requestId")).toLong()

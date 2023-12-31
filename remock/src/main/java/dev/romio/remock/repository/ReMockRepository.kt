@@ -1,4 +1,4 @@
-package dev.romio.remock.data
+package dev.romio.remock.repository
 
 import dev.romio.remock.data.room.dao.RequestDao
 import dev.romio.remock.domain.IReMockRepository

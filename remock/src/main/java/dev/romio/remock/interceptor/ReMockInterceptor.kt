@@ -12,33 +12,53 @@ import dev.romio.remock.util.ReMockUtils.castValuesToPrimitive
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import okhttp3.Interceptor
+import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
-import java.net.URLDecoder
 
 
-open class ReMockInterceptor(
-    context: Context,
-    private val pathMatcher: PathMatcher = ReMockPathMatcher(),
-    private val requestStore: ReMockStore = ReMockGraph.reMockStore
-): Interceptor {
+open class ReMockInterceptor: Interceptor {
 
-    init {
+    private val pathMatcher: PathMatcher
+    private val reMockStore: ReMockStore
+
+    constructor(context: Context) {
         ReMockGraph.initialize(context.applicationContext)
+        this.pathMatcher = ReMockPathMatcher()
+        this.reMockStore = ReMockGraph.reMockStore
+    }
+
+    constructor(context: Context, pathMatcher: PathMatcher) {
+        ReMockGraph.initialize(context.applicationContext)
+        this.pathMatcher = pathMatcher
+        this.reMockStore = ReMockGraph.reMockStore
+
+    }
+
+    constructor(context: Context, reMockStore: ReMockStore) {
+        ReMockGraph.initialize(context.applicationContext)
+        this.pathMatcher = ReMockPathMatcher()
+        this.reMockStore = reMockStore
+    }
+
+    constructor(context: Context, pathMatcher: PathMatcher, reMockStore: ReMockStore) {
+        ReMockGraph.initialize(context.applicationContext)
+        this.pathMatcher = pathMatcher
+        this.reMockStore = reMockStore
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
+        val startTime = System.currentTimeMillis()
         val request = chain.request()
-        val requests = requestStore.getAllRequestsByRequestMethod(request.method)
-        val requestUrl = request.url.host + request.url.encodedPath
-        val decodedRequestUrl = URLDecoder.decode(requestUrl, "UTF-8")
+        val requests = reMockStore.getAllRequestsByRequestMethod(request.method)
+        val requestUrl = getUrlFromRequest(request)
         val matchingRequest = requests.find {
-            pathMatcher.match(it.url, decodedRequestUrl)
+            pathMatcher.match(it.url, requestUrl)
         } ?: return chain.proceed(request)
         val requestWithMockResponse =
-            requestStore.getRequestWithMockResponseByRequestIdBlocking(matchingRequest.id)
+            reMockStore.getRequestWithMockResponseByRequestIdBlocking(matchingRequest.id)
         if(requestWithMockResponse == null ||
             requestWithMockResponse.mockResponseList.isEmpty()) {
             return chain.proceed(request)
@@ -50,7 +70,8 @@ open class ReMockInterceptor(
             requestWithMockResponse.mockResponseList
         ) ?: return chain.proceed(request)
         val transformedResponse = transformMockResponseToResponse(request, chosenResponse)
-        delay(chosenResponse.mockResponse.responseDelay ?: 0)
+        val delayYet = System.currentTimeMillis() - startTime
+        delay(maxOf(0, (chosenResponse.mockResponse.responseDelay ?: 0) - delayYet))
         return transformedResponse
     }
 
@@ -59,8 +80,7 @@ open class ReMockInterceptor(
         request: Request
     ): Map<String, Any> {
 
-        val requestUrl = request.url.host + request.url.encodedPath
-        val decodedRequestUrl = URLDecoder.decode(requestUrl, "UTF-8")
+        val requestUrl = getUrlFromRequest(request)
         val headerMap = request.headers.toMap().castValuesToPrimitive()
         val queryMap = request.url.queryParameterNames.associateBy({
             it
@@ -69,7 +89,7 @@ open class ReMockInterceptor(
         }).castValuesToPrimitive()
         val paramMap = pathMatcher.extractUriTemplateVariables(
             requestEntity.url,
-            decodedRequestUrl
+            requestUrl
         ).castValuesToPrimitive()
         val contentSubtype = request.body?.contentType()?.subtype
         val bodyMap = if(contentSubtype?.equals("json", ignoreCase = true) == true) {
@@ -120,7 +140,13 @@ open class ReMockInterceptor(
             }
             .headers(headers)
             .body(responseBody)
+            .protocol(Protocol.HTTP_1_1)
             .build()
+    }
+
+    open fun getUrlFromRequest(request: Request): String {
+        val url = request.url.toUrl()
+        return "${url.protocol}://${url.authority}/${url.path}"
     }
 
     open fun delay(delay: Long) {
