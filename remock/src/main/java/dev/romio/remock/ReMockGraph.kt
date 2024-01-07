@@ -5,6 +5,7 @@ import androidx.room.Room
 import dev.romio.remock.data.room.ReMockDatabase
 import dev.romio.remock.data.room.dao.RequestDao
 import dev.romio.remock.data.room.dao.ResponseDao
+import dev.romio.remock.data.room.dao.ResponseHeadersDao
 import dev.romio.remock.data.store.ReMockStore
 import dev.romio.remock.ui.nav.ReMockRouteNavigator
 import dev.romio.remock.ui.nav.RouteNavigator
@@ -19,8 +20,11 @@ internal object ReMockGraph {
     private val responseDao: ResponseDao
         get() = database.responseDao()
 
+    private val responseHeadersDao: ResponseHeadersDao
+        get() = database.responseHeadersDao()
+
     internal val reMockStore by lazy {
-        ReMockStore(requestDao, responseDao)
+        ReMockStore(requestDao, responseDao, responseHeadersDao)
     }
 
     internal val routeNavigator: RouteNavigator by lazy {

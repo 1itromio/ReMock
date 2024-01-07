@@ -12,6 +12,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import dev.romio.remock.ReMockGraph
 import dev.romio.remock.data.room.dto.MockResponseWithHeaders
 import dev.romio.remock.data.room.entity.MockResponseEntity
+import dev.romio.remock.data.room.entity.MockResponseHeadersEntity
 import dev.romio.remock.data.store.ReMockStore
 import dev.romio.remock.domain.model.ResponseContentType
 import dev.romio.remock.ui.nav.RouteNavigator
@@ -116,6 +117,18 @@ class ResponseDetailsViewModel(
                 id = responseId ?: 0L
             )
             responseId = reMockStore.saveResponse(responseEntity)
+            val mockHeaderEntities = formState.responseHeaders.split("\n").mapNotNull {
+                val split = it.split(":")
+                if(split.size < 2) {
+                    return@mapNotNull null
+                }
+                MockResponseHeadersEntity(
+                    responseId = responseId ?: 0L,
+                    headerKey = split[0].trim(),
+                    headerValue = split[1].trim()
+                )
+            }
+            reMockStore.saveResponseHeaders(mockHeaderEntities)
             savedStateHandle["responseId"] = responseId?.toString()
             refreshState()
         }
@@ -167,6 +180,6 @@ class ResponseDetailsFormState {
     var responseType by mutableStateOf("JSON")
     var responseBody by mutableStateOf("")
     var protocol by mutableStateOf(Protocol.HTTP_1_1.toString())
-    var responseDelay by mutableStateOf("0")
+    var responseDelay by mutableStateOf("200")
     var responseHeaders by mutableStateOf("")
 }

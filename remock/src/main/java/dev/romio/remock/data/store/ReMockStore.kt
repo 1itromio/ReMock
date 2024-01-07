@@ -2,15 +2,18 @@ package dev.romio.remock.data.store
 
 import dev.romio.remock.data.room.dao.RequestDao
 import dev.romio.remock.data.room.dao.ResponseDao
+import dev.romio.remock.data.room.dao.ResponseHeadersDao
 import dev.romio.remock.data.room.dto.MockResponseWithHeaders
 import dev.romio.remock.data.room.dto.RequestWithMockResponse
 import dev.romio.remock.data.room.entity.MockResponseEntity
+import dev.romio.remock.data.room.entity.MockResponseHeadersEntity
 import dev.romio.remock.data.room.entity.RequestEntity
 import kotlinx.coroutines.flow.Flow
 
 class ReMockStore(
     private val requestDao: RequestDao,
-    private val responseDao: ResponseDao
+    private val responseDao: ResponseDao,
+    private val responseHeadersDao: ResponseHeadersDao
 ) {
 
     fun getAllRequests(): Flow<List<RequestEntity>> {
@@ -55,5 +58,9 @@ class ReMockStore(
 
     suspend fun deleteResponseById(responseId: Long) {
         return responseDao.deleteResponseByResponseId(responseId)
+    }
+
+    suspend fun saveResponseHeaders(headers: Collection<MockResponseHeadersEntity>) {
+        responseHeadersDao.insertAll(headers)
     }
 }
