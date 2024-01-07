@@ -15,7 +15,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +29,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +44,7 @@ import dev.romio.remock.ui.nav.NavRoute
 import dev.romio.remock.ui.viewmodel.ResponseDetailsFormState
 import dev.romio.remock.ui.viewmodel.ResponseDetailsState
 import dev.romio.remock.ui.viewmodel.ResponseDetailsViewModel
+import okhttp3.Protocol
 
 object ResponseDetailsRoute: NavRoute<ResponseDetailsViewModel> {
     override val route: String
@@ -122,16 +127,18 @@ fun ResponseDetailsScreen(
                     }
                 },
                 actions = {
-                    IconButton(
-                        onClick = {
-                            showDeleteDialog = true
+                    if(!state.isAddResponseFlow) {
+                        IconButton(
+                            onClick = {
+                                showDeleteDialog = true
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Delete,
+                                contentDescription = "Delete",
+                                tint = MaterialTheme.colorScheme.onPrimary
+                            )
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Delete,
-                            contentDescription = "Delete",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
                     }
 
                     IconButton(
@@ -230,6 +237,9 @@ fun ResponseDetailsBody(
         Spacer(modifier = Modifier.height(8.dp))
 
         ResponseBody(formState)
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ProtocolDropDown(formState)
         Spacer(modifier = Modifier.height(8.dp))
 
         ResponseHeaders(formState)
@@ -344,6 +354,49 @@ fun ResponseBody(formState: ResponseDetailsFormState) {
         minLines = 8,
         maxLines = 20
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProtocolDropDown(formState: ResponseDetailsFormState) {
+    val requestMethods = listOf(
+        Protocol.HTTP_1_0.toString(),
+        Protocol.HTTP_1_1.toString(),
+        Protocol.HTTP_2.toString()
+    )
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        modifier = Modifier.fillMaxWidth(),
+        expanded = expanded,
+        onExpandedChange = {
+            expanded = !expanded
+        }) {
+        OutlinedTextField(
+            value = formState.protocol,
+            onValueChange = {},
+            readOnly = true,
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier.menuAnchor(),
+            label = {
+                Text(text = "Request Method")
+            }
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            requestMethods.forEach { item ->
+                DropdownMenuItem(
+                    text = { Text(text = item) },
+                    onClick = {
+                        formState.protocol = item
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
 }
 
 @Composable

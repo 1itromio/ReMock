@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -366,11 +367,18 @@ fun AddRequestBottomSheet(
                     Text(text = "Request URL")
                 },
                 minLines = 2,
-                maxLines = 3
+                maxLines = 3,
+                keyboardOptions = KeyboardOptions(autoCorrect = false)
             )
+            if(viewModel.inValidUrlError.isNotBlank()) {
+                Text(text = viewModel.inValidUrlError, color = Color.Red)
+            }
             Spacer(modifier = Modifier.height(28.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 Button(onClick = {
+                    if(!viewModel.isValidRequest(selectedRequestMethod, requestUrl)) {
+                        return@Button
+                    }
                     scope.launch {
                         sheetState.hide()
                     }.invokeOnCompletion {

@@ -1,11 +1,9 @@
 package dev.romio.remock.matcher
 
-import dev.romio.remock.matcher.ReMockPathMatcher
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.Test
 import java.util.Collections
-
 
 class ReMockPathMatcherTest {
 

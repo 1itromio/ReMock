@@ -12,13 +12,15 @@ import dev.romio.remock.util.ReMockUtils.castValuesToPrimitive
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import okhttp3.Interceptor
-import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
 
-
+// TODO: Add Code comments
+// TODO: Add Readme
+// TODO: Add validations for inputs
+// TODO: Mark all ui components internal
 open class ReMockInterceptor: Interceptor {
 
     private val pathMatcher: PathMatcher
@@ -119,28 +121,28 @@ open class ReMockInterceptor: Interceptor {
 
     open fun transformMockResponseToResponse(
         request: Request,
-        mockResponse: MockResponseWithHeaders
+        mockResponseWithHeaders: MockResponseWithHeaders
     ): Response {
-
+        val mockResponse = mockResponseWithHeaders.mockResponse
         val headers = Headers.Builder().also { builder ->
-            mockResponse.mockResponseHeaders.forEach {
+            mockResponseWithHeaders.mockResponseHeaders.forEach {
                 builder.add(it.headerKey, it.headerValue)
             }
         }.build()
-        val responseBody = mockResponse.mockResponse
+        val responseBody = mockResponse
             .responseBody
-            ?.toResponseBody(ReMockUtils.getMediaType(mockResponse.mockResponse.responseType))
+            ?.toResponseBody(ReMockUtils.getMediaType(mockResponse.responseType))
         return Response.Builder()
             .request(request)
-            .code(mockResponse.mockResponse.responseCode)
+            .code(mockResponse.responseCode)
             .also { builder ->
-                mockResponse.mockResponse.message?.let {
+                mockResponse.message?.let {
                     builder.message(it)
                 }
             }
             .headers(headers)
             .body(responseBody)
-            .protocol(Protocol.HTTP_1_1)
+            .protocol(mockResponse.protocol)
             .build()
     }
 

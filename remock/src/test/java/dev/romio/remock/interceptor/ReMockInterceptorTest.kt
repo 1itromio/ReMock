@@ -46,10 +46,10 @@ class ReMockInterceptorTest {
     )
 //
     private val allMockResponses = listOf(
-        MockResponseEntity(0, ResponseContentType.JSON, 200, "OK", null, "{\"name\":\"response1\"}", 200, 0),
-        MockResponseEntity(0, ResponseContentType.JSON, 200, "OK", "header.reqHeader1 == \"value1\" && header.reqHeader2 == \"value2\" && param.userId == \"U1234\" && query.userId == \"U1234\"", "{\"name\":{\"first\": \"test\",\"last\": \"test2\"}}", 200, 1),
-        MockResponseEntity(1, ResponseContentType.JSON, 200, "OK", "header.reqHeader1 == \"value1\" && header.reqHeader2 == \"value2\" && param.userId == \"U1234\" && query.age > 28 && body.name.first == \"test\"", "{\"name\":{\"first\": \"test\",\"last\": \"test2\"}}", 200, 2),
-        MockResponseEntity(2, ResponseContentType.JSON, 200, "OK", "header.reqHeader1 == \"value1\" && header.reqHeader2 == \"value2\" && param.userId == \"U1234\" && query.age > 28 && body.name.first == \"test\"", "{\"name\":{\"first\": \"test\",\"last\": \"test2\"}}", 200, 3),
+        MockResponseEntity(0, ResponseContentType.JSON, 200, "OK", null, "{\"name\":\"response1\"}", Protocol.HTTP_2, 200, 0),
+        MockResponseEntity(0, ResponseContentType.JSON, 200, "OK", "header.reqHeader1 == \"value1\" && header.reqHeader2 == \"value2\" && param.userId == \"U1234\" && query.userId == \"U1234\"", "{\"name\":{\"first\": \"test\",\"last\": \"test2\"}}", Protocol.HTTP_2, 200, 1),
+        MockResponseEntity(1, ResponseContentType.JSON, 200, "OK", "header.reqHeader1 == \"value1\" && header.reqHeader2 == \"value2\" && param.userId == \"U1234\" && query.age > 28 && body.name.first == \"test\"", "{\"name\":{\"first\": \"test\",\"last\": \"test2\"}}", Protocol.HTTP_2,  200, 2),
+        MockResponseEntity(2, ResponseContentType.JSON, 200, "OK", "header.reqHeader1 == \"value1\" && header.reqHeader2 == \"value2\" && param.userId == \"U1234\" && query.age > 28 && body.name.first == \"test\"", "{\"name\":{\"first\": \"test\",\"last\": \"test2\"}}", Protocol.HTTP_2, 200, 3),
     )
 
     private val allMockResponseHeaders = listOf(

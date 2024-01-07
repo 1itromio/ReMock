@@ -2,6 +2,7 @@ package dev.romio.remock.data.room.converter
 
 import androidx.room.TypeConverter
 import dev.romio.remock.domain.model.ResponseContentType
+import okhttp3.Protocol
 
 class TypeConverter {
 
@@ -13,5 +14,15 @@ class TypeConverter {
     @TypeConverter
     fun responseTypeToString(responseType: ResponseContentType?): String? {
         return responseType?.name
+    }
+
+    @TypeConverter
+    fun stringToProtocol(string: String?): Protocol? {
+        return string?.let { Protocol.get(it) }
+    }
+
+    @TypeConverter
+    fun protocolToString(protocol: Protocol?): String? {
+        return protocol?.toString()
     }
 }

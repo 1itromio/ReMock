@@ -1,5 +1,9 @@
 package dev.romio.remock.ui.viewmodel
 
+import android.webkit.URLUtil
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.romio.remock.ReMockGraph
@@ -10,6 +14,7 @@ import dev.romio.remock.ui.screen.RequestDetailsRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.net.URL
 
 class RequestListViewModel(
     private val requestStore: ReMockStore = ReMockGraph.reMockStore,
@@ -17,6 +22,9 @@ class RequestListViewModel(
 ): ViewModel(), RouteNavigator by routeNavigator {
 
     private val _state = MutableStateFlow(RequestListState())
+
+    var inValidUrlError by mutableStateOf("")
+        private set
 
     val state: StateFlow<RequestListState>
         get() = _state
@@ -43,6 +51,19 @@ class RequestListViewModel(
             val requestId = requestStore.addNewRequest(requestEntity)
             navigateToRequestDetails(requestId)
         }
+    }
+
+    fun isValidRequest(
+        selectedRequestMethod: String,
+        requestUrl: String
+    ): Boolean {
+        val isValidUrl = URLUtil.isValidUrl(requestUrl)
+        inValidUrlError = if(!isValidUrl) {
+            "Invalid Url"
+        } else {
+            ""
+        }
+        return isValidUrl
     }
 
     fun navigateToRequestDetails(requestId: Long) {

@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import dev.romio.remock.domain.model.ResponseContentType
+import okhttp3.Protocol
 
 @Entity(
     tableName = "mock_response",
@@ -42,6 +43,9 @@ data class MockResponseEntity(
 
     @ColumnInfo(name = "response")
     val responseBody: String? = null,
+
+    @ColumnInfo(name = "protocol")
+    val protocol: Protocol,
 
     // In Milliseconds
     @ColumnInfo(name = "response_delay")

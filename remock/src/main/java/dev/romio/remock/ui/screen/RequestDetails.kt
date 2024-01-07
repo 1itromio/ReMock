@@ -46,6 +46,7 @@ import dev.romio.remock.domain.model.ResponseContentType
 import dev.romio.remock.ui.nav.NavRoute
 import dev.romio.remock.ui.viewmodel.RequestDetailsState
 import dev.romio.remock.ui.viewmodel.RequestDetailsViewModel
+import okhttp3.Protocol
 
 object RequestDetailsRoute: NavRoute<RequestDetailsViewModel> {
 
@@ -263,6 +264,7 @@ fun ResponseItemPreview() {
             message = "Ok",
             whenExpression = "abc == \"bcd\"",
             responseBody = "{\"key\": \"value\"}",
+            protocol = Protocol.HTTP_2,
             responseDelay = 2000
         ),
         mockResponseHeaders = listOf(
@@ -284,6 +286,7 @@ fun RequestDetailsBodyPreview() {
             message = "Ok",
             whenExpression = "abc == \"bcd\"",
             responseBody = "{\"key\": \"value\"}",
+            protocol = Protocol.HTTP_2,
             responseDelay = 2000
         ),
         mockResponseHeaders = listOf(
@@ -300,6 +303,7 @@ fun RequestDetailsBodyPreview() {
             message = "Ok",
             whenExpression = "abc == \"bcd\"",
             responseBody = "{\"key\": \"value\"}",
+            protocol = Protocol.HTTP_2,
             responseDelay = 2000,
             id = 1L
         ),

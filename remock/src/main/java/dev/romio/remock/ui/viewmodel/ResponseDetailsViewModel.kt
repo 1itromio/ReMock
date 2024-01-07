@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okhttp3.Protocol
 
 class ResponseDetailsViewModel(
     private val reMockStore: ReMockStore,
@@ -110,6 +111,7 @@ class ResponseDetailsViewModel(
                 message = formState.responseMessage.ifBlank { null },
                 whenExpression = formState.whenExpression.ifBlank { null },
                 responseBody = prettyBody.ifBlank { null },
+                protocol = Protocol.get(formState.protocol),
                 responseDelay = formState.responseDelay.ifBlank { null }?.toLong(),
                 id = responseId ?: 0L
             )
@@ -164,6 +166,7 @@ class ResponseDetailsFormState {
     var whenExpression by mutableStateOf("")
     var responseType by mutableStateOf("JSON")
     var responseBody by mutableStateOf("")
+    var protocol by mutableStateOf(Protocol.HTTP_1_1.toString())
     var responseDelay by mutableStateOf("0")
     var responseHeaders by mutableStateOf("")
 }
