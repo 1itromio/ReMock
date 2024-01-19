@@ -23,7 +23,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.Protocol
 
-class ResponseDetailsViewModel(
+internal class ResponseDetailsViewModel(
     private val reMockStore: ReMockStore,
     private val routeNavigator: RouteNavigator,
     private val savedStateHandle: SavedStateHandle,
@@ -167,13 +167,13 @@ class ResponseDetailsViewModel(
 
 }
 
-data class ResponseDetailsState(
+internal data class ResponseDetailsState(
     val isAddResponseFlow: Boolean = false,
     val requestMethod: String = "",
     val requestUrl: String = ""
 )
 
-class ResponseDetailsFormState {
+internal class ResponseDetailsFormState {
     var responseCode by mutableStateOf("200")
     var responseMessage by mutableStateOf("OK")
     var whenExpression by mutableStateOf("")

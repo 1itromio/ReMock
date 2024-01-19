@@ -25,7 +25,7 @@ import okhttp3.Protocol
         )
     ]
 )
-data class MockResponseEntity(
+internal data class MockResponseEntity(
     @ColumnInfo(name = "request_id")
     val requestId: Long,
 

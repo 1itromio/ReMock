@@ -37,19 +37,6 @@ open class ReMockInterceptor: Interceptor {
         ReMockGraph.initialize(context.applicationContext)
         this.pathMatcher = pathMatcher
         this.reMockStore = ReMockGraph.reMockStore
-
-    }
-
-    constructor(context: Context, reMockStore: ReMockStore) {
-        ReMockGraph.initialize(context.applicationContext)
-        this.pathMatcher = ReMockPathMatcher()
-        this.reMockStore = reMockStore
-    }
-
-    constructor(context: Context, pathMatcher: PathMatcher, reMockStore: ReMockStore) {
-        ReMockGraph.initialize(context.applicationContext)
-        this.pathMatcher = pathMatcher
-        this.reMockStore = reMockStore
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -78,7 +65,7 @@ open class ReMockInterceptor: Interceptor {
         return transformedResponse
     }
 
-    open fun createEvaluationMap(
+    private fun createEvaluationMap(
         requestEntity: RequestEntity,
         request: Request
     ): Map<String, Any> {
@@ -110,7 +97,7 @@ open class ReMockInterceptor: Interceptor {
         )
     }
 
-    open fun getBestPossibleResponseEntity(
+    private fun getBestPossibleResponseEntity(
         evaluationMap: Map<String, Any>,
         responseList: List<MockResponseWithHeaders>
     ): MockResponseWithHeaders? {
@@ -120,7 +107,7 @@ open class ReMockInterceptor: Interceptor {
         } ?: responseList.firstOrNull { it.mockResponse.whenExpression == null }
     }
 
-    open fun transformMockResponseToResponse(
+    private fun transformMockResponseToResponse(
         request: Request,
         mockResponseWithHeaders: MockResponseWithHeaders
     ): Response {

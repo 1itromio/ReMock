@@ -8,7 +8,7 @@ import dev.romio.remock.data.room.entity.MockResponseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class ResponseDao: BaseDao<MockResponseEntity> {
+internal abstract class ResponseDao: BaseDao<MockResponseEntity> {
 
     @Transaction
     @Query("SELECT * FROM mock_response WHERE request_id = :requestId AND id = :responseId")

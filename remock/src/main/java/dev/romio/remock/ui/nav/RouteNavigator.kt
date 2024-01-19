@@ -3,7 +3,7 @@ package dev.romio.remock.ui.nav
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-interface RouteNavigator {
+internal interface RouteNavigator {
     fun onNavigated(state: NavigationState)
     fun navigateUp()
     fun popToRoute(route: String)
@@ -12,7 +12,7 @@ interface RouteNavigator {
     val navigationState: StateFlow<NavigationState>
 }
 
-class ReMockRouteNavigator : RouteNavigator {
+internal class ReMockRouteNavigator : RouteNavigator {
 
     private val _navigationState = MutableStateFlow<NavigationState>(NavigationState.Idle)
 

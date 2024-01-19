@@ -75,7 +75,7 @@ import dev.romio.remock.data.room.entity.RequestEntity
 import dev.romio.remock.ui.nav.NavRoute
 import kotlinx.coroutines.launch
 
-object RequestListRoute: NavRoute<RequestListViewModel> {
+internal object RequestListRoute: NavRoute<RequestListViewModel> {
     override val route: String
         get() = "request-list"
 
@@ -90,7 +90,7 @@ object RequestListRoute: NavRoute<RequestListViewModel> {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RequestListScreen(
+internal fun RequestListScreen(
     modifier: Modifier = Modifier,
     viewModel: RequestListViewModel
 ) {
@@ -160,7 +160,7 @@ fun RequestListScreen(
 }
 
 @Composable
-fun RequestListBody(
+internal fun RequestListBody(
     requestsList: List<RequestEntity>,
     onRequestClick: (Long) -> Unit,
     onRemoveRequest: (RequestEntity) -> Unit,
@@ -192,7 +192,7 @@ fun RequestListBody(
 }
 
 @Composable
-fun RequestList(
+internal fun RequestList(
     requestsList: List<RequestEntity>,
     onItemClick: (RequestEntity) -> Unit,
     onRemoveRequest: (RequestEntity) -> Unit,
@@ -215,7 +215,7 @@ fun RequestList(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RequestItem(
+internal fun RequestItem(
     request: RequestEntity,
     onRemoveItem: (RequestEntity) -> Unit,
     modifier: Modifier = Modifier
@@ -333,7 +333,7 @@ fun SwipeBackground(dismissState: DismissState) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddRequestBottomSheet(
+internal fun AddRequestBottomSheet(
     viewModel: RequestListViewModel,
     onDismissRequest: () -> Unit
 ) {

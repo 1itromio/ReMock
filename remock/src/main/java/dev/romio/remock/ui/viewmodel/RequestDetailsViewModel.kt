@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RequestDetailsViewModel(
+internal class RequestDetailsViewModel(
     private val reMockStore: ReMockStore,
     private val routeNavigator: RouteNavigator,
     savedStateHandle: SavedStateHandle
@@ -70,7 +70,7 @@ class RequestDetailsViewModel(
     }
 }
 
-data class RequestDetailsState(
+internal data class RequestDetailsState(
     val requestMethod: String = "",
     val requestUrl: String = "",
     val responseList: List<MockResponseWithHeaders> = emptyList()

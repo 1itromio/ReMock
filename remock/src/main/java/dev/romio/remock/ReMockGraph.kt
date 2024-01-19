@@ -36,9 +36,11 @@ internal object ReMockGraph {
             synchronized(this) {
                 if(ReMockGraph::database.isInitialized.not()) {
                     database = Room.databaseBuilder(
-                        context.applicationContext,
-                        ReMockDatabase::class.java, "remock-db"
-                    ).build()
+                        context = context.applicationContext,
+                        klass = ReMockDatabase::class.java,
+                        name = "remock-db.db"
+                    ).createFromAsset("database/remock-db.db")
+                        .build()
                 }
             }
         }

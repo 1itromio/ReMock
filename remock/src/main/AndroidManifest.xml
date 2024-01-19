@@ -4,6 +4,7 @@
         <activity
             android:name="dev.romio.remock.ui.activity.ReMockActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

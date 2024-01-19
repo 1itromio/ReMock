@@ -7,7 +7,7 @@ import dev.romio.remock.ui.screen.RequestListRoute
 import dev.romio.remock.ui.screen.ResponseDetailsRoute
 
 @Composable
-fun ReMockLibrary(
+internal fun ReMockLibrary(
     libraryState: ReMockLibraryState = rememberReMockLibraryState()
 ) {
     NavHost(

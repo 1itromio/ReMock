@@ -18,7 +18,7 @@ import org.json.JSONException
 import java.util.StringTokenizer
 
 
-object ReMockUtils {
+internal object ReMockUtils {
 
     fun tokenizeToStringArray(
         str: String?, delimiters: String, trimTokens: Boolean, ignoreEmptyTokens: Boolean

@@ -4,6 +4,6 @@ import androidx.room.Dao
 import dev.romio.remock.data.room.entity.MockResponseHeadersEntity
 
 @Dao
-abstract class ResponseHeadersDao: BaseDao<MockResponseHeadersEntity> {
+internal abstract class ResponseHeadersDao: BaseDao<MockResponseHeadersEntity> {
 
 }

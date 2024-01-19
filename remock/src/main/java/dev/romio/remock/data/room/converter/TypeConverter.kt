@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import dev.romio.remock.domain.model.ResponseContentType
 import okhttp3.Protocol
 
-class TypeConverter {
+internal class TypeConverter {
 
     @TypeConverter
     fun stringToResponseType(string: String?): ResponseContentType? {

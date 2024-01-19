@@ -10,7 +10,7 @@ import dev.romio.remock.data.room.entity.MockResponseHeadersEntity
 import dev.romio.remock.data.room.entity.RequestEntity
 import kotlinx.coroutines.flow.Flow
 
-class ReMockStore(
+internal class ReMockStore(
     private val requestDao: RequestDao,
     private val responseDao: ResponseDao,
     private val responseHeadersDao: ResponseHeadersDao

@@ -95,7 +95,7 @@ fun Body(modifier: Modifier, state: State, onStartTest: () -> Unit) {
     val context = LocalContext.current
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Button(onClick = {
-            context.startActivity(Intent(context, ReMockActivity::class.java))
+            ReMockActivity.open(context)
         }) {
             Text(text = "Open ReMock")
         }

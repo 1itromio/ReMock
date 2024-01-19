@@ -48,7 +48,7 @@ import dev.romio.remock.ui.viewmodel.RequestDetailsState
 import dev.romio.remock.ui.viewmodel.RequestDetailsViewModel
 import okhttp3.Protocol
 
-object RequestDetailsRoute: NavRoute<RequestDetailsViewModel> {
+internal object RequestDetailsRoute: NavRoute<RequestDetailsViewModel> {
 
     override val route: String
         get() = "request-details/{requestId}"
@@ -72,7 +72,7 @@ object RequestDetailsRoute: NavRoute<RequestDetailsViewModel> {
 }
 
 @Composable
-fun RequestDetailsScreen(
+internal fun RequestDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: RequestDetailsViewModel
 ) {
@@ -88,7 +88,7 @@ fun RequestDetailsScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RequestDetailsScreen(
+internal fun RequestDetailsScreen(
     modifier: Modifier = Modifier,
     state: RequestDetailsState,
     navigateToResponseDetails: (Long, Long) -> Unit,
@@ -149,7 +149,7 @@ fun RequestDetailsScreen(
 }
 
 @Composable
-fun RequestDetailsBody(
+internal fun RequestDetailsBody(
     requestMethod: String,
     requestUrl: String,
     responseList: List<MockResponseWithHeaders>,
@@ -216,7 +216,7 @@ fun RequestDetailsBody(
 }
 
 @Composable
-fun ResponseItem(
+internal fun ResponseItem(
     response: MockResponseWithHeaders,
     modifier: Modifier = Modifier
 ) {

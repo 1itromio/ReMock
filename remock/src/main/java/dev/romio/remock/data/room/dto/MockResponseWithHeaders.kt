@@ -5,7 +5,7 @@ import androidx.room.Relation
 import dev.romio.remock.data.room.entity.MockResponseEntity
 import dev.romio.remock.data.room.entity.MockResponseHeadersEntity
 
-data class MockResponseWithHeaders(
+internal data class MockResponseWithHeaders(
     @Embedded val mockResponse: MockResponseEntity,
     @Relation(
         parentColumn = "id",

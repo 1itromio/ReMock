@@ -11,14 +11,14 @@ import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun rememberReMockLibraryState(
+internal fun rememberReMockLibraryState(
     navController: NavHostController = rememberNavController(),
     context: Context = LocalContext.current
 ) = remember(navController, context) {
     ReMockLibraryState(navController, context)
 }
 
-class ReMockLibraryState(
+internal class ReMockLibraryState(
     val navController: NavHostController,
     private val context: Context
 ) {

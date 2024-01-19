@@ -23,7 +23,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class MockResponseHeadersEntity(
+internal data class MockResponseHeadersEntity(
     @ColumnInfo(name = "response_id")
     val responseId: Long,
 

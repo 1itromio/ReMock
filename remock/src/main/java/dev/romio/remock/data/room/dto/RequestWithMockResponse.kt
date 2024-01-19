@@ -5,7 +5,7 @@ import androidx.room.Relation
 import dev.romio.remock.data.room.entity.MockResponseEntity
 import dev.romio.remock.data.room.entity.RequestEntity
 
-data class RequestWithMockResponse(
+internal data class RequestWithMockResponse(
     @Embedded val request: RequestEntity,
     @Relation(
         entity = MockResponseEntity::class,

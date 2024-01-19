@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class RequestEntity(
+internal data class RequestEntity(
     @ColumnInfo(name = "url")
     val url: String,
 

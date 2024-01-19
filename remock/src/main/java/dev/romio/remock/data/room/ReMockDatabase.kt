@@ -21,7 +21,7 @@ import dev.romio.remock.data.room.entity.RequestEntity
     exportSchema = false
 )
 @TypeConverters(TypeConverter::class)
-abstract class ReMockDatabase: RoomDatabase() {
+internal abstract class ReMockDatabase: RoomDatabase() {
 
     abstract fun requestDao(): RequestDao
 

@@ -1,5 +1,5 @@
 package dev.romio.remock.domain.model
 
-enum class ResponseContentType {
+internal enum class ResponseContentType {
     JSON, XML, TEXT
 }

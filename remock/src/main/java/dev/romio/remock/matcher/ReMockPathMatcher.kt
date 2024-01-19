@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 import kotlin.concurrent.Volatile
 
 
-class ReMockPathMatcher: PathMatcher {
+internal class ReMockPathMatcher: PathMatcher {
 
     companion object {
         const val DEFAULT_PATH_SEPARATOR = "/"

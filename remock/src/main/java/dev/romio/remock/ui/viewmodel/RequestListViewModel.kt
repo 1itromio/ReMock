@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.net.URL
 
-class RequestListViewModel(
+internal class RequestListViewModel(
     private val requestStore: ReMockStore = ReMockGraph.reMockStore,
     private val routeNavigator: RouteNavigator = ReMockGraph.routeNavigator
 ): ViewModel(), RouteNavigator by routeNavigator {
@@ -78,6 +78,6 @@ class RequestListViewModel(
 
 }
 
-data class RequestListState(
+internal data class RequestListState(
     val requestList: List<RequestEntity> = emptyList()
 )

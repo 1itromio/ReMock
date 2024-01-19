@@ -46,7 +46,7 @@ import dev.romio.remock.ui.viewmodel.ResponseDetailsState
 import dev.romio.remock.ui.viewmodel.ResponseDetailsViewModel
 import okhttp3.Protocol
 
-object ResponseDetailsRoute: NavRoute<ResponseDetailsViewModel> {
+internal object ResponseDetailsRoute: NavRoute<ResponseDetailsViewModel> {
     override val route: String
         get() = "request-details/{requestId}/response?responseId={responseId}"
 
@@ -73,7 +73,7 @@ object ResponseDetailsRoute: NavRoute<ResponseDetailsViewModel> {
 }
 
 @Composable
-fun ResponseDetailsScreen(
+internal fun ResponseDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: ResponseDetailsViewModel,
 ) {
@@ -89,7 +89,7 @@ fun ResponseDetailsScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResponseDetailsScreen(
+internal fun ResponseDetailsScreen(
     modifier: Modifier = Modifier,
     state: ResponseDetailsState,
     formState: ResponseDetailsFormState,
@@ -201,7 +201,7 @@ fun ResponseDetailsScreen(
 }
 
 @Composable
-fun ResponseDetailsBody(
+internal fun ResponseDetailsBody(
     modifier: Modifier = Modifier,
     state: ResponseDetailsState,
     formState: ResponseDetailsFormState,
@@ -273,7 +273,7 @@ fun ResponseDetailsBody(
 }
 
 @Composable
-fun ResponseCode(formState: ResponseDetailsFormState) {
+internal fun ResponseCode(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.responseCode,
@@ -291,7 +291,7 @@ fun ResponseCode(formState: ResponseDetailsFormState) {
 }
 
 @Composable
-fun ResponseMessage(formState: ResponseDetailsFormState) {
+internal fun ResponseMessage(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.responseMessage,
@@ -309,7 +309,7 @@ fun ResponseMessage(formState: ResponseDetailsFormState) {
 }
 
 @Composable
-fun WhenExpression(formState: ResponseDetailsFormState) {
+internal fun WhenExpression(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.whenExpression,
@@ -325,7 +325,7 @@ fun WhenExpression(formState: ResponseDetailsFormState) {
 }
 
 @Composable
-fun ResponseType(formState: ResponseDetailsFormState) {
+internal fun ResponseType(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.responseType,
@@ -341,7 +341,7 @@ fun ResponseType(formState: ResponseDetailsFormState) {
 }
 
 @Composable
-fun ResponseBody(formState: ResponseDetailsFormState) {
+internal fun ResponseBody(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.responseBody,
@@ -358,7 +358,7 @@ fun ResponseBody(formState: ResponseDetailsFormState) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProtocolDropDown(formState: ResponseDetailsFormState) {
+internal fun ProtocolDropDown(formState: ResponseDetailsFormState) {
     val requestMethods = listOf(
         Protocol.HTTP_1_0.toString(),
         Protocol.HTTP_1_1.toString(),
@@ -400,7 +400,7 @@ fun ProtocolDropDown(formState: ResponseDetailsFormState) {
 }
 
 @Composable
-fun ResponseDelay(formState: ResponseDetailsFormState) {
+internal fun ResponseDelay(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.responseDelay,
@@ -418,7 +418,7 @@ fun ResponseDelay(formState: ResponseDetailsFormState) {
 }
 
 @Composable
-fun ResponseHeaders(formState: ResponseDetailsFormState) {
+internal fun ResponseHeaders(formState: ResponseDetailsFormState) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = formState.responseHeaders,

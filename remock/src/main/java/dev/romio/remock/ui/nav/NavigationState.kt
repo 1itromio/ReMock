@@ -2,9 +2,9 @@ package dev.romio.remock.ui.nav
 
 import java.util.UUID
 
-sealed class NavigationState {
+internal sealed class NavigationState {
 
-    object Idle : NavigationState()
+    data object Idle : NavigationState()
 
     data class NavigateToRoute(val route: String, val id: String = UUID.randomUUID().toString()) :
         NavigationState()
